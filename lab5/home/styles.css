@@ -1,0 +1,61 @@
+.nav-item img {
+    width: 24px;
+    height: 24px;
+}
+
+.dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: #222;
+}
+
+body {
+    height: 100vh;
+    font-family: "Golos Text";
+    height: 100vh;
+}
+
+.posts {
+    margin-top: 74px;
+    width: 474px;
+}
+
+.userdata {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.avatar {
+    margin-right: 10px;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+}
+
+.userdata p {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.userdata .edit {
+    height: 24px;
+    width: 24px;
+}
+
+p.count {
+    text-align: center;
+    font-size: 15px;
+}
+
+.likes {
+    padding: 6px 12px;
+    min-width: 68px;
+    border-radius: 8px;
+    height: 30px;
+    width: 78px;
+    margin: 16px 0;
+    font-size: 15px;
+    font-weight: 400;
+    background-color: rgba(34, 34, 34, 0.05);
+}
