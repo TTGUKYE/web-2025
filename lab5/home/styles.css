@@ -16,9 +16,9 @@ body {
     height: 100vh;
 }
 
-.posts {
-    margin-top: 74px;
+.post img {
     width: 474px;
+    height: 474px;
 }
 
 .userdata {
