@@ -6,14 +6,14 @@
 <body>
     <h2>Проверка года на високосность</h2>
 
-    <form method="POST">
+    <form method="GET">
         Введите год:
         <input type="number" name="year" min="1" max="30000" required>
         <input type="submit" value="Проверить">
     </form>
 
-    <?php if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        $year = isset($_POST["year"]) ? (int) $_POST["year"] : 0;
+    <?php if ($_SERVER["REQUEST_METHOD"] === "GET") {
+        $year = isset($_GET["year"]) ? (int) $_GET["year"] : 0;
         function isLeapYear($year)
         {
             return ($year % 4 == 0 && $year % 100 != 0) || $year % 400 == 0;

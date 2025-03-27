@@ -3,15 +3,15 @@
     <title>Поиск счастливых билетов</title>
 </head>
 <body>
-    <form method="POST">
+    <form method="GET">
         Начальный номер: <input type="text" name="start" required pattern="\d{6}"><br>
         Конечный номер: <input type="text" name="end" required pattern="\d{6}"><br>
         <input type="submit" value="Найти">
     </form>
 
-    <?php if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        $start = $_POST["start"];
-        $end = $_POST["end"];
+    <?php if ($_SERVER["REQUEST_METHOD"] === "GET") {
+        $start = $_GET["start"];
+        $end = $_GET["end"];
 
         echo "<h3>Результаты для $start - $end:</h3>";
 

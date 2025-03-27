@@ -4,7 +4,7 @@
     <title>Знак зодиака</title>
 </head>
 <body>
-    <form method="POST">
+    <form method="GET">
         Введите дату (ДД.ММ.ГГГГ):
         <input type="text" name="date"
                pattern="\d{2}\.\d{2}\.\d{4}"
@@ -12,8 +12,8 @@
         <input type="submit" value="Узнать">
     </form>
 
-    <?php if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        $input = $_POST["date"] ?? "";
+    <?php if ($_SERVER["REQUEST_METHOD"] === "GET") {
+        $input = $_GET["date"] ?? "";
         $parts = explode(".", $input);
         $day = (int) ($parts[0] ?? 0);
         $month = (int) ($parts[1] ?? 0);
