@@ -16,7 +16,7 @@ body {
     height: 100vh;
 }
 
-.post img {
+.post-img {
     width: 474px;
     height: 474px;
 }
@@ -33,29 +33,23 @@ body {
     border-radius: 6px;
 }
 
-.userdata p {
-    font-size: 14px;
-    font-weight: 500;
-}
-
 .userdata .edit {
     height: 24px;
     width: 24px;
 }
 
-p.count {
-    text-align: center;
-    font-size: 15px;
-}
-
 .likes {
     padding: 6px 12px;
-    min-width: 68px;
     border-radius: 8px;
-    height: 30px;
     width: 78px;
     margin: 16px 0;
     font-size: 15px;
     font-weight: 400;
     background-color: rgba(34, 34, 34, 0.05);
+}
+
+.hint-text {
+    color: #808080;
+    font-size: 13px;
+    margin-top: 5px;
 }
