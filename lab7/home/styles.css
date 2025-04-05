@@ -1,0 +1,55 @@
+.nav-item img {
+    width: 24px;
+    height: 24px;
+}
+
+.dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: #222;
+}
+
+body {
+    height: 100vh;
+    font-family: "Golos Text";
+    height: 100vh;
+}
+
+.post-img {
+    width: 474px;
+    height: 474px;
+}
+
+.userdata {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.avatar {
+    margin-right: 10px;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+}
+
+.userdata .edit {
+    height: 24px;
+    width: 24px;
+}
+
+.likes {
+    padding: 6px 12px;
+    border-radius: 8px;
+    width: 78px;
+    margin: 16px 0;
+    font-size: 15px;
+    font-weight: 400;
+    background-color: rgba(34, 34, 34, 0.05);
+}
+
+.hint-text {
+    color: #808080;
+    font-size: 13px;
+    margin-top: 5px;
+}

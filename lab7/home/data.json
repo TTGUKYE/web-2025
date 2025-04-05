@@ -1,0 +1,32 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Ваня Денисов",
+      "avatar": "../src/images/avatar_1.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Лиза Дёмина",
+      "avatar": "../src/images/avatar_2.jpg"
+    }
+  ],
+  "posts": [
+    {
+      "id": 1,
+      "user_id": 1,
+      "image": "../src/images/streets.jpg",
+      "content": "Так красиво сегодня на улице! Настоящая зима)) Вспоминается Бродский: «Поздно ночью, в уснувшей долине, на самом дне, в городке, занесенном снегом по ручку двери...» ",
+      "likes": 203,
+      "timestamp": 1676543200
+    },
+    {
+      "id": 2,
+      "user_id": 2,
+      "image": "../src/images/pos.jpg",
+      "content": "Пост от Лизы",
+      "likes": 69,
+      "timestamp": 1676550000
+    }
+  ]
+}
