@@ -41,7 +41,7 @@ if ($errors) {
     <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Навигация -->
+    <!Навигация
     <div class="nav">
         <div class="nav-item">
             <a href="home.php">
@@ -57,7 +57,7 @@ if ($errors) {
         </div>
     </div>
 
-    <!-- Профиль -->
+    <!Профиль
     <div class="profile">
         <img src="<?= htmlspecialchars(
             $selectedUser["avatar"]
@@ -68,7 +68,7 @@ if ($errors) {
             <span><?= $selectedUser["posts_count"] ?> постов</span>
         </div>
 
-        <!-- Посты -->
+        <!Посты
         <div>
             <?php foreach ($selectedUser["posts"] as $image) { ?>
                 <?php
