@@ -1,6 +1,4 @@
 <?php
-// validation.php
-
 function validateUserData($user)
 {
     $errors = [];
