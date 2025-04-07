@@ -36,18 +36,16 @@ if ($errors) {
     <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="nav">
+    <div>
         <div class="nav-item">
-            <a href="profile.php">
-                <img src="../src/assets/home.svg" alt="Home">
-            </a>
+            <img src="../src/assets/home.svg" alt="Home" />
         </div>
         <div class="nav-item">
-            <img src="../src/assets/profile.svg" alt="Profile">
+            <img src="../src/assets/profile.svg" alt="Profile" />
             <div class="dot"></div>
         </div>
-        <div class="nav-item">
-            <img src="../src/assets/plus.svg" alt="Plus">
+        <div>
+            <img src="../src/assets/plus.svg" alt="Plus" />
         </div>
     </div>
 
