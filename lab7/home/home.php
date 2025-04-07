@@ -42,11 +42,15 @@ if ($userId) {
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="styles.css">
-    <title>home</title>
-        <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&display=swap" rel="stylesheet">
-</head>
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" href="styles.css" />
+        <title>Home</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&display=swap"
+            rel="stylesheet"
+        />
+    </head>
 <body>
     <div>
         <div class="nav-item">
@@ -61,56 +65,23 @@ if ($userId) {
         </div>
     </div>
 
-    <?php if ($selectedUser) { ?>
-        <div class="userdata">
-            <img
-                src="<?= htmlspecialchars($selectedUser["avatar"]) ?>"
-                alt="<?= htmlspecialchars($selectedUser["name"]) ?>"
-                class="avatar"
-            >
-            <p class="text"><?= htmlspecialchars($selectedUser["name"]) ?></p>
-        </div>
-
-        <div >
-            <?php
-            $userPosts = array_filter(
-                $posts,
-                fn($post) => $post["user_id"] == $selectedUser["id"]
-            );
-            foreach ($userPosts as $post) {
+    <?php if ($selectedUser) {
+        foreach ($posts as $post) {
+            if ($post["user_id"] !== $selectedUser["id"]) {
+                continue;
+            }
+            $user = $selectedUser;
+            include "post-template.php";
+        }
+    } else {
+        foreach ($users as $user) {
+            foreach ($posts as $post) {
+                if ($post["user_id"] !== $user["id"]) {
+                    continue;
+                }
                 include "post-template.php";
             }
-            ?>
-        </div>
-    <?php } else { ?>
-        <div >
-            <?php foreach ($users as $user) { ?>
-                <div c>
-                    <div class="userdata">
-                        <img
-                            src="<?= htmlspecialchars($user["avatar"]) ?>"
-                            alt="<?= htmlspecialchars($user["name"]) ?>"
-                            class="avatar"
-                        >
-                        <p class="text"><?= htmlspecialchars(
-                            $user["name"]
-                        ) ?></p>
-                    </div>
-
-                    <div >
-                        <?php
-                        $userPosts = array_filter(
-                            $posts,
-                            fn($post) => $post["user_id"] == $user["id"]
-                        );
-                        foreach ($userPosts as $post) {
-                            include "post-template.php";
-                        }
-                        ?>
-                    </div>
-                </div>
-            <?php } ?>
-        </div>
-    <?php } ?>
+        }
+    } ?>
 </body>
 </html>

@@ -1,20 +1,27 @@
 <?php
-if (!isset($post)) {
+if (!isset($post, $user)) {
     return;
-}
-$image = htmlspecialchars($post["image"] ?? "");
-$likes = htmlspecialchars((string) ($post["likes"] ?? 0));
-$content = nl2br(htmlspecialchars($post["content"] ?? ""));
-$timestamp = date("d M Y H:i", $post["timestamp"] ?? 0);
-?>
+} ?>
 
 <div class="post">
-    <img src="<?= $image ?>" class="post-img">
+    <div>
+        <img src="<?= htmlspecialchars(
+            $user["avatar"] ?? ""
+        ) ?>" class="avatar">
+        <p><?= htmlspecialchars($user["name"] ?? "") ?></p>
+    </div>
+
+    <img src="<?= htmlspecialchars(
+        $post["image"] ?? ""
+    ) ?>" class="post-img" alt="Пост">
+
     <div class="likes">
         <img src="../src/assets/like.png" alt="Like">
-        <span><?= $likes ?></span>
+        <span><?= htmlspecialchars($post["likes"] ?? 0) ?></span>
     </div>
-    <p><?= $content ?></p>
-                <span class="hint-text">...еще</span>
-    <p class="hint-text"><?= $timestamp ?></p>
+
+    <p><?= nl2br(htmlspecialchars($post["content"] ?? "")) ?></p>
+    <p class="hint-text"><?= htmlspecialchars(
+        date("d M Y", $post["timestamp"] ?? 0)
+    ) ?></p>
 </div>
