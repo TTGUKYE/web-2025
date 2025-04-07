@@ -2,112 +2,115 @@
 require_once "validation.php";
 
 $data = json_decode(file_get_contents("data.json"), true);
+$users = $data["users"] ?? [];
+$posts = $data["posts"] ?? [];
 
-if (!isset($data["users"]) || !isset($data["posts"])) {
-    die("Ошибка: Некорректные данные в JSON.");
+if (empty($users) || empty($posts)) {
+    die("Ошибка: Неверная структура JSON");
 }
-
-$users = $data["users"];
-$posts = $data["posts"];
 
 foreach ($users as $user) {
     if (!validateUser($user)) {
-        die("Ошибка валидации данных пользователя: " . json_encode($user));
+        die("Ошибка валидации пользователя: " . json_encode($user));
     }
 }
 
 foreach ($posts as $post) {
     if (!validatePost($post)) {
-        die("Ошибка валидации данных поста: " . json_encode($post));
+        die("Ошибка валидации поста: " . json_encode($post));
     }
 }
 
-function findUserById($users, $id)
-{
+$userId = $_GET["id"] ?? null;
+$selectedUser = null;
+
+if ($userId) {
+    $userId = (int) $userId;
     foreach ($users as $user) {
-        if (isset($user["id"]) && $user["id"] === $id) {
-            return $user;
+        if ($user["id"] === $userId) {
+            $selectedUser = $user;
+            break;
         }
     }
-    return null;
+    if (!$selectedUser) {
+        header("Location: home.php");
+        exit();
+    }
 }
-
-function filterPostsByUser($posts, $userId)
-{
-    return array_filter($posts, function ($post) use ($userId) {
-        return isset($post["user_id"]) && $post["user_id"] === $userId;
-    });
-}
-
-$userId = isset($_GET["id"]) ? (int) $_GET["id"] : 1;
-
-$selectedUser = findUserById($users, $userId);
-
-if (!$selectedUser) {
-    $selectedUser = $users[0] ?? [];
-}
-
-$userPosts = filterPostsByUser($posts, $selectedUser["id"] ?? 0);
 ?>
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="styles.css">
-    <title>
-        <?= htmlspecialchars(
-            $selectedUser["name"] ?? "Пользователь не найден",
-            ENT_QUOTES,
-            "UTF-8"
-        ) ?>
-    </title>
-    <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&display=swap" rel="stylesheet">
+    <title>home</title>
+        <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="nav">
+    <div>
         <div class="nav-item">
-            <img src="../src/assets/home.svg" alt="Home">
+            <img src="../src/assets/home.svg" alt="Home" />
             <div class="dot"></div>
         </div>
         <div class="nav-item">
-            <a href="?id=1">
-                <img src="../src/assets/profile.svg" alt="Profile">
-            </a>
+            <img src="../src/assets/profile.svg" alt="Profile" />
         </div>
         <div class="nav-item">
-            <img src="../src/assets/plus.svg" alt="Plus">
+            <img src="../src/assets/plus.svg" alt="Plus" />
         </div>
     </div>
 
-    <div class="userdata">
-        <div>
+    <?php if ($selectedUser) { ?>
+        <div class="userdata">
             <img
-                src="<?= htmlspecialchars(
-                    $selectedUser["avatar"] ?? "",
-                    ENT_QUOTES,
-                    "UTF-8"
-                ) ?>"
-                alt="<?= htmlspecialchars(
-                    $selectedUser["name"] ?? "Аватар не найден",
-                    ENT_QUOTES,
-                    "UTF-8"
-                ) ?>"
+                src="<?= htmlspecialchars($selectedUser["avatar"]) ?>"
+                alt="<?= htmlspecialchars($selectedUser["name"]) ?>"
                 class="avatar"
-                />
-            <p class="text">
-                <?= htmlspecialchars(
-                    $selectedUser["name"] ?? "Пользователь не найден",
-                    ENT_QUOTES,
-                    "UTF-8"
-                ) ?>
-            </p>
+            >
+            <p class="text"><?= htmlspecialchars($selectedUser["name"]) ?></p>
         </div>
-        <img src="../src/assets/edit.svg" alt="Edit" class="edit">
-    </div>
 
-    <?php foreach ($userPosts as $post) {
-        include "post-template.php";
-    } ?>
+        <div >
+            <?php
+            $userPosts = array_filter(
+                $posts,
+                fn($post) => $post["user_id"] == $selectedUser["id"]
+            );
+            foreach ($userPosts as $post) {
+                include "post-template.php";
+            }
+            ?>
+        </div>
+    <?php } else { ?>
+        <div >
+            <?php foreach ($users as $user) { ?>
+                <div c>
+                    <div class="userdata">
+                        <img
+                            src="<?= htmlspecialchars($user["avatar"]) ?>"
+                            alt="<?= htmlspecialchars($user["name"]) ?>"
+                            class="avatar"
+                        >
+                        <p class="text"><?= htmlspecialchars(
+                            $user["name"]
+                        ) ?></p>
+                    </div>
+
+                    <div >
+                        <?php
+                        $userPosts = array_filter(
+                            $posts,
+                            fn($post) => $post["user_id"] == $user["id"]
+                        );
+                        foreach ($userPosts as $post) {
+                            include "post-template.php";
+                        }
+                        ?>
+                    </div>
+                </div>
+            <?php } ?>
+        </div>
+    <?php } ?>
 </body>
 </html>

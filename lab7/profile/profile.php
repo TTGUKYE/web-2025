@@ -32,14 +32,13 @@ if ($errors) {
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="styles.css">
-    <title><?= htmlspecialchars($selectedUser["name"]) ?></title>
+    <title>Profile</title>
     <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!Навигация
     <div class="nav">
         <div class="nav-item">
-            <a href="home.php">
+            <a href="profile.php">
                 <img src="../src/assets/home.svg" alt="Home">
             </a>
         </div>
@@ -62,7 +61,7 @@ if ($errors) {
             <span><?= $selectedUser["posts_count"] ?> постов</span>
         </div>
 
-        <div>
+        <div >
             <?php foreach ($selectedUser["posts"] as $image) { ?>
                 <?php
                 $post = ["image" => $image];
