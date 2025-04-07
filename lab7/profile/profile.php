@@ -3,7 +3,6 @@ $data = json_decode(file_get_contents("data.json"), true);
 $users = $data["users"] ?? [];
 
 $userId = (int) ($_GET["id"] ?? 1);
-
 foreach ($users as $user) {
     if ($user["id"] === $userId) {
         $selectedUser = $user;
