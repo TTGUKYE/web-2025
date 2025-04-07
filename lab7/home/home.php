@@ -94,7 +94,7 @@ $userPosts = filterPostsByUser($posts, $selectedUser["id"] ?? 0);
                     "UTF-8"
                 ) ?>"
                 class="avatar"
-            >
+                />
             <p class="text">
                 <?= htmlspecialchars(
                     $selectedUser["name"] ?? "Пользователь не найден",

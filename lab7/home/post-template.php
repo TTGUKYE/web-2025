@@ -5,7 +5,7 @@ if (!isset($post) || !is_array($post)) {
 
 $image = htmlspecialchars($post["image"] ?? "", ENT_QUOTES, "UTF-8");
 $likes = htmlspecialchars((string) ($post["likes"] ?? 0), ENT_QUOTES, "UTF-8");
-$content = nl2br(htmlspecialchars($post["content"] ?? "", ENT_QUOTES, "UTF-8"));
+$content = pre(htmlspecialchars($post["content"] ?? "", ENT_QUOTES, "UTF-8"));
 $timestamp = htmlspecialchars(
     date("d M Y H:i", (int) ($post["timestamp"] ?? 0)),
     ENT_QUOTES,
