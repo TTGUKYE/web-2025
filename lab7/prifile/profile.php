@@ -1,12 +1,9 @@
 <?php
-// 1. Загрузка данных
 $data = json_decode(file_get_contents("data.json"), true);
 $users = $data["users"] ?? [];
 
-// 2. Получение ID
 $userId = (int) ($_GET["id"] ?? 1);
 
-// 3. Поиск пользователя
 foreach ($users as $user) {
     if ($user["id"] === $userId) {
         $selectedUser = $user;
@@ -14,13 +11,11 @@ foreach ($users as $user) {
     }
 }
 
-// 4. Если не найден - редирект
 if (!$selectedUser) {
     header("Location: profile.php");
     exit();
 }
 
-// 5. Валидация данных
 require "validation.php";
 $errors = validateUserData($selectedUser);
 if ($errors) {
@@ -57,7 +52,6 @@ if ($errors) {
         </div>
     </div>
 
-    <!Профиль
     <div class="profile">
         <img src="<?= htmlspecialchars(
             $selectedUser["avatar"]
@@ -68,7 +62,6 @@ if ($errors) {
             <span><?= $selectedUser["posts_count"] ?> постов</span>
         </div>
 
-        <!Посты
         <div>
             <?php foreach ($selectedUser["posts"] as $image) { ?>
                 <?php

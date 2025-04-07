@@ -1,11 +1,8 @@
 <?php
-// Подключение валидации
 require_once "validation.php";
 
-// Загрузка данных из JSON
 $data = json_decode(file_get_contents("data.json"), true);
 
-// Проверяем, что данные существуют
 if (!isset($data["users"]) || !isset($data["posts"])) {
     die("Ошибка: Некорректные данные в JSON.");
 }
@@ -13,21 +10,18 @@ if (!isset($data["users"]) || !isset($data["posts"])) {
 $users = $data["users"];
 $posts = $data["posts"];
 
-// Проверка данных пользователей
 foreach ($users as $user) {
     if (!validateUser($user)) {
         die("Ошибка валидации данных пользователя: " . json_encode($user));
     }
 }
 
-// Проверка данных постов
 foreach ($posts as $post) {
     if (!validatePost($post)) {
         die("Ошибка валидации данных поста: " . json_encode($post));
     }
 }
 
-// Поиск пользователя по ID
 function findUserById($users, $id)
 {
     foreach ($users as $user) {
@@ -38,7 +32,6 @@ function findUserById($users, $id)
     return null;
 }
 
-// Фильтрация постов по ID пользователя
 function filterPostsByUser($posts, $userId)
 {
     return array_filter($posts, function ($post) use ($userId) {
@@ -46,18 +39,14 @@ function filterPostsByUser($posts, $userId)
     });
 }
 
-// Валидация параметров
 $userId = isset($_GET["id"]) ? (int) $_GET["id"] : 1;
 
-// Находим выбранного пользователя
 $selectedUser = findUserById($users, $userId);
 
-// Если пользователь не найден, выбираем первого
 if (!$selectedUser) {
     $selectedUser = $users[0] ?? [];
 }
 
-// Получаем посты выбранного пользователя
 $userPosts = filterPostsByUser($posts, $selectedUser["id"] ?? 0);
 ?>
 
@@ -91,7 +80,6 @@ $userPosts = filterPostsByUser($posts, $selectedUser["id"] ?? 0);
         </div>
     </div>
 
-    <!Блок пользователя
     <div class="userdata">
         <div>
             <img
@@ -118,7 +106,6 @@ $userPosts = filterPostsByUser($posts, $selectedUser["id"] ?? 0);
         <img src="../src/assets/edit.svg" alt="Edit" class="edit">
     </div>
 
-    <!Список постов
     <?php foreach ($userPosts as $post) {
         include "post-template.php";
     } ?>
