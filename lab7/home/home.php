@@ -29,6 +29,10 @@ if ($userId) {
     foreach ($users as $user) {
         if ($user["id"] === $userId) {
             $selectedUser = $user;
+            $posts = array_filter($posts, function ($post) {
+                global $userId;
+                return $post["user_id"] === $userId;
+            });
             break;
         }
     }
@@ -37,20 +41,32 @@ if ($userId) {
         exit();
     }
 }
+
+function getUser($userId)
+{
+    global $users;
+    foreach ($users as $user) {
+        if ($user["id"] === $userId) {
+            return $user;
+        }
+    }
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
+
     <head>
         <meta charset="UTF-8" />
         <link rel="stylesheet" href="styles.css" />
         <title>Home</title>
         <link
             href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&display=swap"
-            rel="stylesheet"
-        />
+            rel="stylesheet" />
     </head>
+
 <body>
     <div>
         <div class="nav-item">
@@ -65,23 +81,10 @@ if ($userId) {
         </div>
     </div>
 
-    <?php if ($selectedUser) {
-        foreach ($posts as $post) {
-            if ($post["user_id"] !== $selectedUser["id"]) {
-                continue;
-            }
-            $user = $selectedUser;
-            include "post-template.php";
-        }
-    } else {
-        foreach ($users as $user) {
-            foreach ($posts as $post) {
-                if ($post["user_id"] !== $user["id"]) {
-                    continue;
-                }
-                include "post-template.php";
-            }
-        }
+    <?php foreach ($posts as $post) {
+        $user = getUser($post["user_id"]);
+        include "post-template.php";
     } ?>
 </body>
+
 </html>
