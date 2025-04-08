@@ -11,8 +11,8 @@
     </form>
 
     <?php if ($_SERVER["REQUEST_METHOD"] === "GET") {
-        $start = $_GET["start"];
-        $end = $_GET["end"];
+        $start = $_GET["start"] ?? 100000;
+        $end = $_GET["end"] ?? 100000;
 
         echo "<h3>Результаты для $start - $end:</h3>";
 
