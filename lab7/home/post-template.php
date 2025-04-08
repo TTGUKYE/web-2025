@@ -21,6 +21,7 @@ if (!isset($post, $user)) {
     </div>
 
     <p><?= nl2br(htmlspecialchars($post["content"] ?? "")) ?></p>
+    <span class="hint-text">...еще</span>
     <p class="hint-text"><?= htmlspecialchars(
         date("d M Y", $post["timestamp"] ?? 0)
     ) ?></p>
