@@ -1,31 +1,25 @@
 <?php
+
 function validateUser($user)
 {
-    return isset($user["id"], $user["name"], $user["avatar"]) &&
+    return isset($user["id"]) &&
         is_int($user["id"]) &&
+        isset($user["name"]) &&
         is_string($user["name"]) &&
-        strlen($user["name"]) >= 3 &&
-        is_string($user["avatar"]) &&
-        strlen($user["avatar"]) >= 5;
+        strlen($user["name"]) >= 3;
 }
 
 function validatePost($post)
 {
-    return isset(
-        $post["id"],
-        $post["user_id"],
-        $post["image"],
-        $post["likes"],
-        $post["timestamp"],
-        $post["content"]
-    ) &&
+    return isset($post["id"]) &&
         is_int($post["id"]) &&
+        isset($post["user_id"]) &&
         is_int($post["user_id"]) &&
-        is_string($post["image"]) &&
-        strlen($post["image"]) >= 5 &&
+        isset($post["likes"]) &&
         is_int($post["likes"]) &&
+        isset($post["timestamp"]) &&
         is_numeric($post["timestamp"]) &&
+        isset($post["content"]) &&
         is_string($post["content"]) &&
         strlen($post["content"]) >= 1;
 }
-?>
