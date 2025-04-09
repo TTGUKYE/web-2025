@@ -18,7 +18,6 @@ if (!$selectedUser) {
 require "validation.php";
 $errors = validateUserData($selectedUser);
 if ($errors) {
-    echo "<div style='color: red'>";
     foreach ($errors as $error) {
         echo "<p>$error</p>";
     }
