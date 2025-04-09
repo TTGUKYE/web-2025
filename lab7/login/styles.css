@@ -5,6 +5,7 @@ body {
 
 .form {
     width: 345px;
+    border: none;
 }
 
 .about {
@@ -25,6 +26,7 @@ input {
     height: 44px;
     border-radius: 10px;
     background-color: #f2f3f5;
+    border: none;
 }
 
 .hint-text {

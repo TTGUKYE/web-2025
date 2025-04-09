@@ -25,6 +25,7 @@ input {
     height: 44px;
     border-radius: 10px;
     background-color: #f2f3f5;
+    border: none;
 }
 
 .hint-text {
