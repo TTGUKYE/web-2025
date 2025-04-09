@@ -11,7 +11,7 @@ BEGIN {Greeting}
   PosName := Pos('name=', QueryString);
   IF PosName > 0 THEN
   BEGIN
-    Name := Copy(QueryString, PosName + Length('name='), Length(QueryString));
+    Name := Copy(QueryString, PosName + Length('name='));
     WRITELN('Hello dear, ', Name, '!')
   END
   ELSE
