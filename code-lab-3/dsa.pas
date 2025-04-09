@@ -10,7 +10,7 @@ VAR
   Host: String;
 BEGIN {PrintEnvironmentVariables}
   WRITELN('Content-Type: text/plain');
-  WRITELN; // ѕуста€ строка между заголовком и телом ответа
+  WRITELN;
   // ѕолучаем значени€ переменных окружени€
   RequestMethod := GetEnv('REQUEST_METHOD');
   QueryString := GetEnv('QUERY_STRING');
