@@ -38,16 +38,21 @@ body {
     width: 24px;
 }
 
-.likes {
+.like-button {
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
     padding: 6px 12px;
     border-radius: 8px;
-    width: 78px;
-    margin: 16px 0;
-    font-size: 15px;
-    font-weight: 400;
     background-color: rgba(34, 34, 34, 0.05);
 }
-
+.hint-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #808080;
+    font-size: 13px;
+}
 .hint-text {
     color: #808080;
     font-size: 13px;
