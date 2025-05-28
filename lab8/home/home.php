@@ -79,10 +79,10 @@ function getUser($userId)
     </div>
 
     <?php foreach ($posts as $post): ?>
-        <?php
-        $user = getUser($post["user_id"]);
-        include "post-template.php";
-        ?>
-    <?php endforeach; ?>
+            <?php
+            $user = getUser($post["user_id"]);
+            include "post-template.php";
+            ?>
+        <?php endforeach; ?>
 </body>
 </html>

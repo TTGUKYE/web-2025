@@ -1,12 +1,17 @@
-// profile.php
 <?php
-include "db.php"; // Подключение к БД
+require_once "validation.php";
+require_once "db.php";
 
-// Получение ID пользователя из GET-параметра
-$userId = (int) ($_GET["id"] ?? 1);
+$db = connectDatabase();
 
-// Запрос данных пользователя
-try {
+$users = $db->query("SELECT * FROM users")->fetchAll(PDO::FETCH_ASSOC);
+$posts = $db->query("SELECT * FROM posts")->fetchAll(PDO::FETCH_ASSOC);
+
+$userId = $_GET["id"] ?? null;
+$selectedUser = null;
+
+if ($userId) {
+    $userId = (int) $userId;
     $stmt = $pdo->prepare("
         SELECT
             id,
@@ -17,18 +22,24 @@ try {
         WHERE id = ?
     ");
     $stmt->execute([$userId]);
-    $selectedUser = $stmt->fetch();
-} catch (PDOException $e) {
-    die("Ошибка запроса: " . $e->getMessage());
+    $selectedUser = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$selectedUser) {
+        header("Location: profil.php");
+        exit();
+    }
+
+    // Загрузка постов выбранного пользователя
+    $stmt = $db->prepare("SELECT * FROM posts WHERE user_id = ?");
+    $stmt->execute([$userId]);
+    $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-// Если пользователь не найден
 if (!$selectedUser) {
     header("Location: profile.php");
     exit();
 }
 
-// Получение количества постов пользователя
 try {
     $stmt = $pdo->prepare("
         SELECT COUNT(*) AS posts_count
@@ -54,7 +65,6 @@ try {
     die("Ошибка запроса: " . $e->getMessage());
 }
 
-// Валидация данных
 require "validation.php";
 $errors = validateUserData($selectedUser);
 if ($errors) {
@@ -68,7 +78,6 @@ if ($errors) {
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <!-- ... (остальной HTML-код) ... -->
 </head>
 <body>
     <div class="profile">

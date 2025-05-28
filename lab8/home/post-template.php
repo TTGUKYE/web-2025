@@ -3,8 +3,8 @@ if (!isset($post, $user)) {
     return;
 } ?>
 
-<div class="post">
-    <div>
+<div class="posts">
+    <div >
         <img src="<?= htmlspecialchars(
             $user["avatar_src"] ?? ""
         ) ?>" class="avatar">
@@ -21,8 +21,8 @@ if (!isset($post, $user)) {
     </div>
 
     <p><?= nl2br(htmlspecialchars($post["description"] ?? "")) ?></p>
-    <span class="hint-text">...еще</span>
-    <p class="hint-text"><?= htmlspecialchars(
+    <span class="more">...еще</span>
+    <p class="time"><?= htmlspecialchars(
         date("d M Y", strtotime($post["created_at"] ?? 0))
     ) ?></p>
 </div>
