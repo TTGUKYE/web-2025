@@ -1,4 +1,3 @@
--- Вставка пользователей
 INSERT INTO
     users (id, username, avatar_src, about)
 VALUES
@@ -15,7 +14,6 @@ VALUES
         'Люблю путешествовать и делиться впечатлениями!'
     );
 
--- Вставка постов
 INSERT INTO
     posts (
         id,

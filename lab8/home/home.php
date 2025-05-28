@@ -1,16 +1,12 @@
 <?php
 require_once "validation.php";
-require_once "db.php"; // Файл с подключением к БД
+require_once "db.php";
 
-// Подключение к базе данных
 $db = connectDatabase();
 
-// Загрузка пользователей из БД
 $users = $db->query("SELECT * FROM users")->fetchAll(PDO::FETCH_ASSOC);
-// Загрузка постов из БД
 $posts = $db->query("SELECT * FROM posts")->fetchAll(PDO::FETCH_ASSOC);
 
-// Валидация данных
 foreach ($users as $user) {
     if (!validateUser($user)) {
         die("Ошибка валидации пользователя: " . json_encode($user));
@@ -82,7 +78,6 @@ function getUser($userId)
         </div>
     </div>
 
-    <!-- Вывод постов -->
     <?php foreach ($posts as $post): ?>
         <?php
         $user = getUser($post["user_id"]);
