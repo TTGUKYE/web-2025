@@ -19,7 +19,6 @@ function connectDatabase()
         );
         return $pdo;
     } catch (PDOException $e) {
-        // Выводим полное сообщение об ошибке для отладки
         die("Ошибка подключения к базе данных: " . $e->getMessage());
     }
 }

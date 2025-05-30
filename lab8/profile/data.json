@@ -2,9 +2,9 @@
   "users": [
     {
       "id": 1,
-      "name": "Ваня Денисов",
-      "avatar": "../src/images/avatar_1.jpg",
-      "bio": "Привет! Я системный аналитик в ACME :) Тут моя жизнь только для самых классных!",
+      "username": "Ваня Денисов",
+      "avatar_src": "../src/images/avatar_1.jpg",
+      "description": "Привет! Я системный аналитик в ACME :) Тут моя жизнь только для самых классных!",
       "posts_count": 43,
       "posts": [
         "../src/images/profile/1_street.jpg",
@@ -26,9 +26,9 @@
     },
     {
       "id": 2,
-      "name": "Лиза Дёмина",
-      "avatar": "../src/images/avatar_2.jpg",
-      "bio": "Я люблю путешествовать и делиться впечатлениями! Присоединяйтесь к моему миру :)",
+      "username": "Лиза Дёмина",
+      "avatar_src": "../src/images/avatar_2.jpg",
+      "description": "Я люблю путешествовать и делиться впечатлениями! Присоединяйтесь к моему миру :)",
       "posts_count": 27,
       "posts": [
         "../src/images/profile/16_sunset.jpg",

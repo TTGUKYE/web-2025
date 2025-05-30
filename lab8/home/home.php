@@ -55,8 +55,7 @@ function getUser($userId)
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="styles.css" />
         <title>Home</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.gstatic.com" />
         <link
             href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&display=swap"
             rel="stylesheet"
@@ -78,11 +77,9 @@ function getUser($userId)
         </div>
     </div>
 
-    <?php foreach ($posts as $post): ?>
-            <?php
-            $user = getUser($post["user_id"]);
-            include "post-template.php";
-            ?>
-        <?php endforeach; ?>
+    <?php foreach ($posts as $post) {
+        $user = getUser($post["user_id"]);
+        include "post-template.php";
+    } ?>
 </body>
 </html>

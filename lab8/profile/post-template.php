@@ -2,7 +2,6 @@
 if (!isset($post["image"])) {
     return;
 }
-
 $src = htmlspecialchars($post["image"] ?? "", ENT_QUOTES, "UTF-8");
 ?>
 
