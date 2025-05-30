@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="login.css" />
+        <title>Login</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&display=swap"
+            rel="stylesheet"
+        />
+        <script>
+            function show_hide_password(target) {
+                var input = document.getElementById("password-input");
+                if (input.getAttribute("type") == "password") {
+                    target.classList.add("view");
+                    input.setAttribute("type", "text");
+                } else {
+                    target.classList.remove("view");
+                    input.setAttribute("type", "password");
+                }
+                return false;
+            }
+        </script>
+    </head>
+    <body class="page">
+        <div class="login-form">
+            <div class="login-form__image">
+                <h1 class="login-form__title">Войти</h1>
+                <img
+                    src="assets/welcome.jpg"
+                    alt="login image"
+                    class="login-form__image-pic"
+                />
+            </div>
+
+            <form action="login" class="login-form__form">
+                <div class="input-field">
+                    <label class="input-field__label">Электропочта</label>
+                    <input
+                        type="email"
+                        name="email"
+                        class="input-field__input"
+                    />
+                    <p class="input-field__hint">
+                        Введите электропочту в формате *****@***.**
+                    </p>
+                </div>
+
+                <div class="input-field">
+                    <label class="input-field__label">Пароль</label>
+                    <div class="password">
+                        <input
+                            type="password"
+                            id="password-input"
+                            name="password"
+                            class="input-field__input"
+                        />
+                        <a
+                            class="password-control"
+                            onclick="return show_hide_password(this);"
+                        ></a>
+                    </div>
+                </div>
+
+                <button type="submit" class="login-form__button">
+                    Продолжить
+                </button>
+            </form>
+        </div>
+    </body>
+</html>

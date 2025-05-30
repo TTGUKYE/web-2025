@@ -1,0 +1,100 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.page {
+    display: flex;
+    justify-content: center;
+    font-family: "Golos Text", sans-serif;
+    background-color: white;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+    width: 100%;
+    max-width: 960px;
+    padding: 80px;
+}
+
+.login-form__image {
+    position: relative;
+}
+
+.login-form__title {
+    font-size: 140px;
+    font-weight: 600;
+    position: absolute;
+    top: -100px;
+    left: -90px;
+}
+
+.login-form__image-pic {
+    max-width: 100%;
+}
+
+.login-form__form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 345px;
+}
+
+.input-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-field__label {
+    color: #222;
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+
+.input-field__input {
+    width: 100%;
+    height: 44px;
+    border: none;
+    border-radius: 10px;
+    background-color: #f2f3f5;
+    padding: 10px;
+}
+
+.input-field__hint {
+    color: #808080;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.login-form__button {
+    height: 48px;
+    margin-top: 20px;
+    background-color: #222;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.password {
+    position: relative;
+}
+
+.password-control {
+    position: absolute;
+    top: 11px;
+    right: 6px;
+    width: 24px;
+    height: 24px;
+    background: no-repeat url("assets/Eye 24.svg");
+}
+
+.password-control.view {
+    background: no-repeat url("assets/Eye-off 24.svg");
+}
