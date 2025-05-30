@@ -2,75 +2,122 @@
 require_once "db.php";
 require_once "validation.php";
 
-// Проверка метода запроса
+header("Content-Type: application/json");
+
 $method = $_SERVER["REQUEST_METHOD"];
 if ($method !== "POST") {
     http_response_code(405);
-    die("Доступ разрешен только для POST-запросов");
+    echo json_encode([
+        "status" => "error",
+        "message" => "Only POST method is allowed",
+    ]);
+    exit();
 }
 
-// Парсинг JSON данных
-$json = file_get_contents("php://input");
-$data = json_decode($json, true);
+// Обработка multipart/form-data
+$data = [
+    "user_id" => $_POST["user_id"] ?? null,
+    "description" => $_POST["description"] ?? null,
+];
 
-if (json_last_error() !== JSON_ERROR_NONE) {
-    http_response_code(400);
-    die("Ошибка в формате данных");
-}
+// Обработка файла изображения
+$imagePath = null;
+if (!empty($_FILES["image"])) {
+    $image = $_FILES["image"];
 
-// Валидация данных
-if (
-    !isset($data["user_id"], $data["image"], $data["description"]) ||
-    !is_int($data["user_id"]) ||
-    !is_string($data["image"]) ||
-    !is_string($data["description"]) ||
-    strlen($data["description"]) < 1
-) {
-    http_response_code(400);
-    die("Некорректные данные");
-}
-
-// Обработка загрузки изображения
-if ($_FILES["image"]["error"] === UPLOAD_ERR_OK) {
-    $uploadDir = "../src/images/";
-    $uploadFile = $uploadDir . basename($_FILES["image"]["username"]);
+    // Проверка ошибок загрузки
+    if ($image["error"] !== UPLOAD_ERR_OK) {
+        http_response_code(400);
+        echo json_encode([
+            "status" => "error",
+            "message" => "File upload error: " . $image["error"],
+        ]);
+        exit();
+    }
 
     // Проверка типа файла
-    $allowedTypes = ["image/jpeg", "image/png"];
-    $detectedType = mime_content_type($_FILES["image"]["tmp_name"]);
+    $allowedTypes = ["image/jpeg", "image/png", "image/gif"];
+    $detectedType = mime_content_type($image["tmp_name"]);
 
     if (!in_array($detectedType, $allowedTypes)) {
         http_response_code(400);
-        die("Недопустимый формат изображения");
+        echo json_encode([
+            "status" => "error",
+            "message" => "Invalid file type. Allowed: JPEG, PNG, GIF",
+        ]);
+        exit();
     }
 
-    // Перемещение файла
-    if (!move_uploaded_file($_FILES["image"]["tmp_name"], $uploadFile)) {
+    // Генерация уникального имени файла
+    $extension = pathinfo($image["name"], PATHINFO_EXTENSION);
+    $filename = uniqid("post_") . "." . $extension;
+    $uploadDir = __DIR__ . "/../src/images/";
+    $uploadFile = $uploadDir . $filename;
+
+    // Сохранение файла
+    if (!move_uploaded_file($image["tmp_name"], $uploadFile)) {
         http_response_code(500);
-        die("Ошибка загрузки изображения");
+        echo json_encode([
+            "status" => "error",
+            "message" => "Failed to save image",
+        ]);
+        exit();
     }
 
-    $data["image"] = $uploadFile; // Сохраняем путь к изображению
-} else {
-    http_response_code(400);
-    die("Изображение не загружено");
+    $imagePath = "../src/images/" . $filename;
+    $data["image"] = $imagePath;
 }
 
-// Сохранение поста в БД
+// Валидация данных
+$errors = [];
+if (empty($data["user_id"])) {
+    $errors[] = "User ID is required";
+}
+if (empty($data["description"])) {
+    $errors[] = "Description is required";
+}
+if (empty($data["image"])) {
+    $errors[] = "Image is required";
+}
+
+if (!empty($errors)) {
+    http_response_code(400);
+    echo json_encode([
+        "status" => "error",
+        "message" => "Validation failed",
+        "errors" => $errors,
+    ]);
+    exit();
+}
+
+// Сохранение в БД
 try {
     $stmt = $db->prepare("
-        INSERT INTO posts (user_id, image, description, like_count, created_at)
-        VALUES (?, ?, ?, ?, NOW())
+        INSERT INTO posts
+        (user_id, description, image, like_count, created_at)
+        VALUES (:user_id, :description, :image, :like_count, NOW())
     ");
+
     $stmt->execute([
-        $data["user_id"],
-        $data["image"],
-        $data["description"],
-        $data["like_count"] ?? 0,
+        ":user_id" => (int) $data["user_id"],
+        ":description" => $data["description"],
+        ":image" => $data["image"],
+        ":like_count" => $_POST["like_count"] ?? 0,
     ]);
-    echo "Пост успешно добавлен!";
+
+    $postId = $db->lastInsertId();
+
+    echo json_encode([
+        "status" => "success",
+        "message" => "Post created successfully",
+        "post_id" => $postId,
+        "image_path" => $data["image"],
+    ]);
 } catch (PDOException $e) {
     http_response_code(500);
-    die("Ошибка сохранения поста: " . $e->getMessage());
+    echo json_encode([
+        "status" => "error",
+        "message" => "Database error: " . $e->getMessage(),
+    ]);
 }
 ?>

@@ -5,7 +5,6 @@ function connectDatabase()
     $dbname = "blog";
     $username = "root";
     $password = "";
-
     try {
         $pdo = new PDO(
             "mysql:host=$host;dbname=$dbname;charset=utf8",
@@ -22,6 +21,5 @@ function connectDatabase()
         die("Ошибка подключения: " . $e->getMessage());
     }
 }
-
-$db = connectDatabase();
+$pdo = connectDatabase(); // Правильное имя переменной
 ?>

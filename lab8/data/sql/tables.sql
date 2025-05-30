@@ -6,8 +6,7 @@ CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
     about TEXT,
-    avatar_src VARCHAR(255),
-    avatar_alt VARCHAR(50)
+    avatar_src VARCHAR(255)
 );
 
 CREATE TABLE posts (

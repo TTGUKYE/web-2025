@@ -1,5 +1,9 @@
 <?php
-if (!isset($post, $user)) {
+if (
+    !isset($post, $user) ||
+    empty($post["image"]) ||
+    empty($post["description"])
+) {
     return;
 } ?>
 

@@ -1,36 +1,26 @@
 <?php
+require_once "user-utils.php";
 require_once "validation.php";
-require_once "db.php";
-
-$db = connectDatabase();
-
-$posts = $db->query("SELECT * FROM posts")->fetchAll(PDO::FETCH_ASSOC);
 
 $userId = (int) ($_GET["id"] ?? 1);
+$user = findUserById($userId);
 
-if ($userId) {
-    $userId = (int) $userId;
-    $stmt = $db->prepare("SELECT * FROM posts WHERE id = ?");
-    $stmt->execute([$userId]);
-    $selectedUser = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if (!$selectedUser) {
-        header("Location: profile.php");
-        exit();
-    }
-
-    // Загрузка постов выбранного пользователя
-    $stmt = $db->prepare("SELECT * FROM posts WHERE id = ?");
-    $stmt->execute([$userId]);
-    $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+if (!$user) {
+    header("Location: profile.php");
+    exit();
 }
 
-function getUser($userId)
-{
-    global $db;
-    $stmt = $db->prepare("SELECT * FROM posts WHERE id = ?");
-    $stmt->execute([$userId]);
-    return $stmt->fetch(PDO::FETCH_ASSOC);
+$posts = getUserPosts($userId);
+$postsCount = count($posts);
+
+$validationErrors = validateUserData([
+    "username" => $user["username"],
+    "description" => $user["description"],
+]);
+
+$description = $user["description"];
+if (strlen($description) > 200) {
+    $description = substr($description, 0, 200) . "...";
 }
 ?>
 
@@ -46,10 +36,10 @@ function getUser($userId)
     <div>
         <div class="nav-item">
             <img src="../src/assets/home.svg" alt="Home" />
+            <div class="dot"></div>
         </div>
         <div class="nav-item">
             <img src="../src/assets/profile.svg" alt="Profile" />
-            <div class="dot"></div>
         </div>
         <div>
             <img src="../src/assets/plus.svg" alt="Plus" />
@@ -58,14 +48,12 @@ function getUser($userId)
 
     <div class="profile">
         <img
-            src="<?= htmlspecialchars($selectedUser["avatar_src"]) ?>"
+            src="<?= htmlspecialchars($user["src"]) ?>"
             class="avatar"
             alt="Аватар"
         >
-        <p class="name"><?= htmlspecialchars($selectedUser["uname"]) ?></p>
-        <p class="text"><?= htmlspecialchars(
-            $selectedUser["description"]
-        ) ?></p>
+        <p class="name"><?= htmlspecialchars($user["username"]) ?></p>
+        <p class="text"><?= htmlspecialchars($description) ?></p>
         <div class="counter">
             <span><?= $postsCount ?> постов</span>
         </div>
@@ -74,6 +62,7 @@ function getUser($userId)
             <?php foreach ($posts as $post): ?>
                 <?php include "post-template.php"; ?>
             <?php endforeach; ?>
+        </div>
     </div>
 </body>
 </html>
